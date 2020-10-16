@@ -23,14 +23,22 @@ const ColorList = ({ colors, updateColors, editing, setEditing }) => {
     axiosWithAuth()
       .put(`/api/colors/${colorToEdit.id}`, colorToEdit)
       .then((res) => {
-        console.log(res.data)
-        setEditing(false)
+        console.log(res.data);
+        setEditing(false);
       })
       .catch((err) => console.log(err.response));
   };
 
   const deleteColor = (color) => {
     // make a delete request to delete this color
+    axiosWithAuth()
+      .delete(`/api/colors/${colorToEdit.id}`)
+      .then((res) => {
+        console.log(res);
+        updateColors(colors.filter((item) => item.id !== color.id));
+        setEditing(false);
+      })
+      .catch((err) => console.log(err.response));
   };
 
   return (
